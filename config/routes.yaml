@@ -1,0 +1,25 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+# config/routes.yaml
+
+pizza_list:
+  path:     /pizzas
+  controller: App\Controller\PizzaController::showAll
+
+pizza_create:
+  path:     /pizzaCreate/{name}
+  controller: App\Controller\PizzaController::createPizza
+
+pizza_get:
+  path:     /pizza/{name}
+  controller: App\Controller\PizzaController::getPizzaWithName
+
+pizza_get_id:
+  path:     /pizzaId/{id}
+  controller: App\Controller\PizzaController::getPizza
+
+pizza_delete:
+  path:     /pizzaDelete/{name}
+  controller: App\Controller\PizzaController::deletePizza
