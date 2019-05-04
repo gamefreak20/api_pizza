@@ -7,19 +7,35 @@
 pizza_list:
   path:     /pizzas
   controller: App\Controller\PizzaController::showAll
-
-pizza_create:
-  path:     /pizzaCreate/{name}
-  controller: App\Controller\PizzaController::createPizza
+  methods:    GET
 
 pizza_get:
-  path:     /pizza/{name}
-  controller: App\Controller\PizzaController::getPizzaWithName
-
-pizza_get_id:
-  path:     /pizzaId/{id}
+  path:     /pizzas/{name}
   controller: App\Controller\PizzaController::getPizza
 
+pizza_create:
+  path:     /pizzas
+  controller: App\Controller\PizzaController::createPizza
+  methods:    POST
+
 pizza_delete:
-  path:     /pizzaDelete/{name}
+  path:     /pizzas
   controller: App\Controller\PizzaController::deletePizza
+  methods:    DELETE
+
+
+
+topping_list:
+  path:     /toppings
+  controller: App\Controller\ToppingController::showAll
+  methods:    GET
+
+topping_create:
+  path:     /toppings
+  controller: App\Controller\ToppingController::createTopping
+  methods:    POST
+
+topping_delete:
+  path:     /toppings
+  controller: App\Controller\ToppingController::deleteTopping
+  methods:    DELETE
