@@ -2,7 +2,6 @@
 namespace App\Controller;
 
 use App\Entity\Pizzas;
-use App\Entity\PizzaTopping;
 use App\Entity\Toppings;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
