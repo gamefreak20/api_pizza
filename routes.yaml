@@ -1,0 +1,50 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+# config/routes.yaml
+
+pizza_list:
+  path:     /pizzas
+  controller: App\Controller\PizzaController::showAll
+  methods:    GET
+
+pizza_get:
+  path:     /pizzas/{name}
+  controller: App\Controller\PizzaController::getPizza
+
+pizza_create:
+  path:     /pizzas/{name}
+  controller: App\Controller\PizzaController::createPizza
+  methods:    POST
+
+pizza_delete:
+  path:     /pizzas/{name}
+  controller: App\Controller\PizzaController::deletePizza
+  methods:    DELETE
+
+pizza_bake:
+  path:     /pizza/bake/{name}
+  controller: App\Controller\PizzaController::bakePizza
+  methods:    POST
+  
+pizza_slice:
+  path:     /pizza/slice/{name}
+  controller: App\Controller\PizzaController::slicePizza
+  methods:    POST    
+
+
+topping_list:
+  path:     /toppings
+  controller: App\Controller\ToppingController::showAll
+  methods:    GET
+
+topping_create:
+  path:     /toppings/{name}
+  controller: App\Controller\ToppingController::createTopping
+  methods:    POST
+
+topping_delete:
+  path:     /toppings/{name}
+  controller: App\Controller\ToppingController::deleteTopping
+  methods:    DELETE
