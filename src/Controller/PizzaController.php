@@ -28,6 +28,20 @@ class PizzaController extends AbstractController
             foreach ($pizza->getToppingId() as $topping) {
                 $arrayPizza[$counter]['toppings'][] = $topping->getName();
             }
+            if ($pizza->getBaking() == 1) {
+                $baking = 'yes';
+            } else {
+                $baking = 'no';
+            }
+            $arrayPizza[$counter]['baking'][] = $baking;
+
+            if ($pizza->getSliced() == 1) {
+                $sliced = 'yes';
+            } else {
+                $sliced = 'no';
+            }
+            $arrayPizza[$counter]['sliced'][] = $sliced;
+
             $counter++;
         }
 
@@ -56,6 +70,19 @@ class PizzaController extends AbstractController
             foreach ($pizza->getToppingId() as $topping) {
                 $pizzaArray['toppings'][] = $topping->getName();
             }
+            if ($pizza->getBaking() == 1) {
+                $baking = 'yes';
+            } else {
+                $baking = 'no';
+            }
+            $arrayPizza['baking'][] = $baking;
+
+            if ($pizza->getSliced() == 1) {
+                $sliced = 'yes';
+            } else {
+                $sliced = 'no';
+            }
+            $arrayPizza['sliced'][] = $sliced;
 
             return new Response(
                 json_encode($pizzaArray)
@@ -76,6 +103,19 @@ class PizzaController extends AbstractController
             foreach ($pizza->getToppingId() as $topping) {
                 $pizzaArray['toppings'][] = $topping->getName();
             }
+            if ($pizza->getBaking() == 1) {
+                $baking = 'yes';
+            } else {
+                $baking = 'no';
+            }
+            $arrayPizza['baking'][] = $baking;
+
+            if ($pizza->getSliced() == 1) {
+                $sliced = 'yes';
+            } else {
+                $sliced = 'no';
+            }
+            $arrayPizza['sliced'][] = $sliced;
 
             return new Response(
                 json_encode($pizzaArray)
@@ -83,13 +123,13 @@ class PizzaController extends AbstractController
         }
     }
 
-    public function createPizza(Request $request)
+    public function createPizza($name)
     {
-        $name = $request->get('name');
         $entityManager = $this->getDoctrine()->getManager();
 
         $pizza = new Pizzas();
         $pizza->setName($name);
+        $pizza->setBaking(0);
 
         $entityManager->persist($pizza);
         $entityManager->flush();
@@ -97,9 +137,8 @@ class PizzaController extends AbstractController
         return new Response(json_encode($name . " pizza was created"));
     }
 
-    public function deletePizza(Request $request)
+    public function deletePizza($name)
     {
-        $name = $request->get('name');
         $entityManager = $this->getDoctrine()->getManager();
         $pizza = $entityManager->getRepository(Pizzas::class)->findOneBy(['name' => $name]);
 
@@ -112,4 +151,52 @@ class PizzaController extends AbstractController
 
         return new Response(json_encode($name . " Pizza was deleted"));
     }
+	
+	public function bakePizza($name)
+	{
+		$entityManager = $this->getDoctrine()->getManager();
+        $pizza = $entityManager->getRepository(Pizzas::class)->findOneBy(['name' => $name]);
+		
+		if (!$pizza) {
+            return new Response(json_encode('No pizza found'));
+        }
+
+        if ($pizza->getSliced() == 1){
+            return new Response(json_encode('Pizza is already sliced'));
+        }
+
+        if ($pizza->getBaking() == 1){
+            return new Response(json_encode('Pizza is already baked'));
+        }
+		
+		$pizza->setBaking(1);
+		$entityManager->persist($pizza);
+        $entityManager->flush();
+		
+		return new Response(json_encode('baking pizza '.$name));
+	}
+	
+	public function slicePizza($name)
+	{
+		$entityManager = $this->getDoctrine()->getManager();
+        $pizza = $entityManager->getRepository(Pizzas::class)->findOneBy(['name' => $name]);
+
+        if (!$pizza) {
+            return new Response(json_encode('No pizza found'));
+        }
+
+        if ($pizza->getBaking() == 0){
+            return new Response(json_encode('You need to bake the pizza first'));
+        }
+
+        if ($pizza->getSliced() == 1){
+            return new Response(json_encode('Pizza is already sliced'));
+        }
+
+        $pizza->setSliced(1);
+        $entityManager->persist($pizza);
+        $entityManager->flush();
+
+        return new Response(json_encode($name . " Pizza was sliced"));
+	}
 }

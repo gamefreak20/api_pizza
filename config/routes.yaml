@@ -12,17 +12,27 @@ pizza_list:
 pizza_get:
   path:     /pizzas/{name}
   controller: App\Controller\PizzaController::getPizza
+  methods:    GET
 
 pizza_create:
-  path:     /pizzas
+  path:     /pizzas/{name}
   controller: App\Controller\PizzaController::createPizza
   methods:    POST
 
 pizza_delete:
-  path:     /pizzas
+  path:     /pizzas/{name}
   controller: App\Controller\PizzaController::deletePizza
   methods:    DELETE
 
+pizza_bake:
+  path:     /pizzas/bake/{name}
+  controller: App\Controller\PizzaController::bakePizza
+  methods:    POST
+  
+pizza_slice:
+  path:     /pizzas/slice/{name}
+  controller: App\Controller\PizzaController::slicePizza
+  methods:    POST    
 
 
 topping_list:
@@ -31,11 +41,11 @@ topping_list:
   methods:    GET
 
 topping_create:
-  path:     /toppings
+  path:     /toppings/{name}
   controller: App\Controller\ToppingController::createTopping
   methods:    POST
 
 topping_delete:
-  path:     /toppings
+  path:     /toppings/{name}
   controller: App\Controller\ToppingController::deleteTopping
   methods:    DELETE

@@ -28,6 +28,16 @@ class Pizzas
      */
     private $topping_id;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $baking;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $sliced;
+
     public function __construct()
     {
         $this->topping_id = new ArrayCollection();
@@ -72,6 +82,30 @@ class Pizzas
         if ($this->topping_id->contains($toppingId)) {
             $this->topping_id->removeElement($toppingId);
         }
+
+        return $this;
+    }
+
+    public function getBaking(): ?int
+    {
+        return $this->baking;
+    }
+
+    public function setBaking(int $baking): self
+    {
+        $this->baking = $baking;
+
+        return $this;
+    }
+
+    public function getSliced(): ?int
+    {
+        return $this->sliced;
+    }
+
+    public function setSliced(int $sliced): self
+    {
+        $this->sliced = $sliced;
 
         return $this;
     }

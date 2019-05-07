@@ -12,9 +12,6 @@ class ToppingController extends AbstractController
 {
     public function showAll()
     {
-        $arrayPizza = array();
-        $counter = 0;
-
         $toppings = $this->getDoctrine()
             ->getRepository(Toppings::class)
             ->findAll();
@@ -34,9 +31,8 @@ class ToppingController extends AbstractController
         );
     }
 
-    public function createTopping(Request $request)
+    public function createTopping($name, Request $request)
     {
-        $name = $request->get('toppingName');
         $pizzaName = $request->get('pizzaName');
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -46,6 +42,14 @@ class ToppingController extends AbstractController
 
         if (!$pizza) {
             return new Response(json_encode('No pizza found'));
+        }
+		
+		if ($pizza->getBaking() == 1){
+			return new Response(json_encode('Pizza is already baking'));
+		}
+
+        if ($pizza->getSliced() == 1){
+            return new Response(json_encode('Pizza is already sliced'));
         }
 
         $topping = $this->getDoctrine()
@@ -72,9 +76,8 @@ class ToppingController extends AbstractController
         return new Response(json_encode($name . " topping was added to " . $pizzaName));
     }
 
-    public function deleteTopping(Request $request)
+    public function deleteTopping($name, Request $request)
     {
-        $name = $request->get('toppingName');
         $pizzaName = $request->get('pizzaName');
         $entityManager = $this->getDoctrine()->getManager();
         $topping = $entityManager->getRepository(Toppings::class)->findOneBy(['name' => $name]);
@@ -86,6 +89,14 @@ class ToppingController extends AbstractController
 
         if (!$pizza) {
             return new Response(json_encode('No pizza found with the name: '. $pizzaName));
+        }
+		
+		if ($pizza->getBaking() == 1){
+			return new Response(json_encode('Pizza is already baking'));
+		}
+
+        if ($pizza->getSliced() == 1){
+            return new Response(json_encode('Pizza is already sliced'));
         }
 
         $pizza->removeToppingId($topping);
