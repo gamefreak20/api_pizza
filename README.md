@@ -28,7 +28,7 @@
 >Route: /pizzas/slice/{name}  
 >Method: POST      
 >SendData: null                              
->Info: Slice the pizza with this name, when sliced the pizza will be removed from the database<br>
+>Info: Slice the pizza with this name, when the pizza is sliced you will only be able to see it and delete it<br>
 ---
 >Route: /toppings             
 >Method: GET       
